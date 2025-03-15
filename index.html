@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gambling Win/Loss Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .balance {
+            font-size: 2rem;
+            margin: 20px 0;
+            color: #333;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button {
+            width: 40%;
+            padding: 10px;
+            font-size: 1rem;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .win {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .loss {
+            background-color: #f44336;
+            color: white;
+        }
+        .reset {
+            background-color: #555;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gambling Win/Loss Tracker</h1>
+        <div class="balance">Balance: $<span id="balance">0</span></div>
+        <input type="number" id="amount" placeholder="Enter amount">
+        <br>
+        <button class="win" onclick="updateBalance(true)">Win</button>
+        <button class="loss" onclick="updateBalance(false)">Loss</button>
+        <button class="reset" onclick="resetBalance()">Reset</button>
+    </div>
+
+    <script>
+        let balance = parseFloat(localStorage.getItem("balance")) || 0;
+
+        document.getElementById("balance").textContent = balance.toFixed(2);
+
+        function updateBalance(isWin) {
+            const amount = parseFloat(document.getElementById("amount").value);
+            if (isNaN(amount) || amount <= 0) {
+                alert("Please enter a valid amount.");
+                return;
+            }
+            balance = isWin ? balance + amount : balance - amount;
+            localStorage.setItem("balance", balance); // Save to local storage
+            document.getElementById("balance").textContent = balance.toFixed(2);
+        }
+
+        function resetBalance() {
+            balance = 0;
+            localStorage.setItem("balance", balance);
+            document.getElementById("balance").textContent = balance.toFixed(2);
+        }
+    </script>
+</body>
+</html>
